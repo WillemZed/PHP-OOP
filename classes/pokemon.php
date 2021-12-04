@@ -1,7 +1,7 @@
 <?php
 
-require("classes/charizard.php");
-require("classes/blastoise.php");
+require("classes/pikachu.php");
+require("classes/charmeleon.php");
 require("classes/attack.php");
 
 class Pokemon{
@@ -11,6 +11,7 @@ class Pokemon{
     public $attack;
     public $weakness;
     public $resistance;
+    public static $count;
 
     public function __construct($name, $type, $health, $attack, $weakness, $resistance)
     {
@@ -20,9 +21,21 @@ class Pokemon{
         $this->attack = $attack;
         $this->weakness = $weakness;
         $this->resistance = $resistance;
+        self::$count++;
+    }
+
+    public function getPopulation() {
+        if(Pokemon::$count >1) {
+            echo "There are ". Pokemon::$count. " ". $this->name. "'s!";
+        } else {
+            echo "There is only ". Pokemon::$count. " ". $this->name. "!";
+        }
+        
     }
 
     public function attack($attackedPokemon) {
+
+        $attackersAttack = $this->attack[1];
         echo "<br>";
         echo $this->name. " has ". $this->health. " hp";
         echo "<br>";
@@ -33,17 +46,31 @@ class Pokemon{
 
         if($this->type == $attackedPokemon->weakness[0]) {
             echo "It was super effective! ";
-            $this->attack[1] = $this->attack[1] * $attackedPokemon->weakness[1];
+            $attackersAttack = $attackersAttack * $attackedPokemon->weakness[1];
         } 
 
         if($this->type != $attackedPokemon->weakness[0]) {
             echo "It was not super effective... ";
-            $this->attack[1] = $this->attack[1] - $attackedPokemon->resistance[1];
+            $attackersAttack = $attackersAttack - $attackedPokemon->resistance[1];
         }
-        echo "<br>";
-        echo $attackedPokemon->name. " took ". $this->attack[1]. " damage!";
 
-        $attackedPokemon->health = $attackedPokemon->health - $this->attack[1];
+        echo "<br>";
+        echo $attackedPokemon->name. " took ". $attackersAttack. " damage!";
+
+        $attackedPokemon->health = $attackedPokemon->health - $attackersAttack;
+
+        if($attackedPokemon->health <= 0 ) {
+            $this::$count--;
+            echo "<br>";
+            echo $attackedPokemon->name. "'s health dropped to 0!";
+            echo "<br>";
+            echo $attackedPokemon->name. " has fainted!";
+            echo "<br>";
+            echo $this->name. " has won the battle!";
+        } else {
+            echo "<br>";
+            echo $attackedPokemon->name. " has ". $attackedPokemon->health. " hp";
+        }
         echo "<br>";
 
     }
