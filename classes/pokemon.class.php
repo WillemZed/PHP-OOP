@@ -1,29 +1,17 @@
 <?php
 
-require("classes/pikachu.php");
-require("classes/charmeleon.php");
-require("classes/attack.php");
+class Pokemon {
+    // Create properties
+    protected $name;
+    protected $type;
+    protected $health;
+    protected $attack;
+    protected $weakness;
+    protected $resistance;
+    protected static $count;
 
-class Pokemon{
-    public $name;
-    public $type;
-    public $health;
-    public $attack;
-    public $weakness;
-    public $resistance;
-    public static $count;
 
-    public function __construct($name, $type, $health, $attack, $weakness, $resistance)
-    {
-        $this->name = $name;
-        $this->type = $type;
-        $this->health = $health;
-        $this->attack = $attack;
-        $this->weakness = $weakness;
-        $this->resistance = $resistance;
-        self::$count++;
-    }
-
+    // Create function to get the total pokemons
     public function getPopulation() {
         if(Pokemon::$count >1) {
             echo "There are ". Pokemon::$count. " ". $this->name. "'s!";
@@ -33,31 +21,32 @@ class Pokemon{
         
     }
 
-    public function attack($attackedPokemon) {
+    // Create function for when a pokemon attack another pokemon
+    public function attack($attackId, $attackedPokemon) {
 
-        $attackersAttack = $this->attack[1];
+        $attackersAttack = $this->attack[$attackId];
         echo "<br>";
         echo $this->name. " has ". $this->health. " hp";
         echo "<br>";
         echo $attackedPokemon->name. " has ". $attackedPokemon->health. " hp";
         echo "<br>";
-        echo $this->name. " used ". $this->attack[0]. " on ". $attackedPokemon->name. "!";
+        echo $this->name. " used ".  $attackersAttack[0]. " on ". $attackedPokemon->name. "!";
         echo "<br>";
 
         if($this->type == $attackedPokemon->weakness[0]) {
             echo "It was super effective! ";
-            $attackersAttack = $attackersAttack * $attackedPokemon->weakness[1];
+            $attackersAttack[1] = $attackersAttack[1] * $attackedPokemon->weakness[1];
         } 
 
         if($this->type != $attackedPokemon->weakness[0]) {
             echo "It was not super effective... ";
-            $attackersAttack = $attackersAttack - $attackedPokemon->resistance[1];
+            $attackersAttack[1] = $attackersAttack[1] - $attackedPokemon->resistance[1];
         }
 
         echo "<br>";
-        echo $attackedPokemon->name. " took ". $attackersAttack. " damage!";
+        echo $attackedPokemon->name. " took ". $attackersAttack[1]. " damage!";
 
-        $attackedPokemon->health = $attackedPokemon->health - $attackersAttack;
+        $attackedPokemon->health = $attackedPokemon->health - $attackersAttack[1];
 
         if($attackedPokemon->health <= 0 ) {
             $this::$count--;
