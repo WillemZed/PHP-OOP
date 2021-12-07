@@ -4,14 +4,16 @@
             $name = "Charmeleon";
             $type =  "Fire";
             $health = "60";
-            $attack = [["Head Butt", 10 ],["Flare", 30]];
-            $weakness = ["Water" , 2];
-            $resistance = ["Lightning", 20];
+            $attack0 = new Attack("Head Butt", 10);//["Pika Punch", 20]
+            $attack1 = new Attack("Flare", 30);
+            $weakness = new Weakness("Water", 2);
+            $resistance = new Resistance("Lightning", 10);
             
             $this->name = $name;
             $this->type = $type;
             $this->health = $health;
-            $this->attack = $attack;
+            $this->attack0 = $attack0;
+            $this->attack1 = $attack1;
             $this->weakness = $weakness;
             $this->resistance = $resistance;
             self::$count++;

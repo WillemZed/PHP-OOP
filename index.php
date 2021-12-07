@@ -9,17 +9,15 @@
 
     echo $pikachu->getPopulation();
     echo "<br>";
-    echo $charmeleon->getPopulation();
-    echo "<br>";
 
     echo $pikachu->attack(1, $charmeleon);
     echo $charmeleon->attack(0, $pikachu);
     echo $pikachu->attack(0, $charmeleon);
     echo $charmeleon->attack(1, $pikachu);
+
     echo "<br>";
 
     echo $pikachu->getPopulation();
-    echo "<br>";
-    echo $charmeleon->getPopulation();
+    
 
 ?>
