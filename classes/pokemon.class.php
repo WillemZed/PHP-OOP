@@ -2,23 +2,35 @@
 
 class Pokemon {
     // Create properties
-    protected $name;
+    private $name;
     protected $type;
     protected $health;
-    protected $attack;
+    protected $attack0;
+    protected $attack1;
     protected $weakness;
     protected $resistance;
     protected static $count;
 
-
     // Create function to get the total pokemons
-    public function getPopulation() {
+    public static function getPopulation() {
         if(Pokemon::$count >1) {
             echo "There are ". Pokemon::$count. " pokemons!";
         } else {
             echo "There is only ". Pokemon::$count. " pokemon!";
         }
-        
+
+        if(Pokemon::$count == 0) {
+            echo "There are no pokemons left...";
+        }
+    }
+
+    public function setName($name) {
+        $this->name = $name;
+        if($this->name) {
+            return $this->name;
+        } else {
+            echo "name is not set";
+        }
     }
 
     // Create function for when a pokemon attack another pokemon
